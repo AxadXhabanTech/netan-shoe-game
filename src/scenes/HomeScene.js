@@ -1,6 +1,7 @@
 import React from 'react';
+import '../styles/globals.css';
 
-const Menu = ({ onStartGame }) => {
+const HomeScene = ({ onStartGame }) => {
   return (
     <div className="mainMenu">
       <div className="menuContent">
@@ -8,7 +9,7 @@ const Menu = ({ onStartGame }) => {
         <p>Futuristic 3D Combat Arena</p>
         
         <div className="menuButtons">
-          <button className="menuBtn primary" onClick={() => alert('Development in progress')}>
+          <button className="menuBtn primary" onClick={onStartGame}>
             🚀 Start New Game
           </button>
           
@@ -29,4 +30,4 @@ const Menu = ({ onStartGame }) => {
   );
 };
 
-export default Menu;
+export default HomeScene;

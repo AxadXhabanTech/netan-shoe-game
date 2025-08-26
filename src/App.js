@@ -1,42 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import Game from './components/Game';
-import UI from './components/UI';
-import Menu from './components/Menu';
-import './App.css';
+import { useGameState } from './hooks/useGameState';
+import HomeScene from './scenes/HomeScene';
+import Battlefield from './scenes/Battlefield';
+import './styles/globals.css';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [currentScreen, setCurrentScreen] = useState('loading'); // 'loading', 'menu', 'game'
-  const [gameState, setGameState] = useState({
-    score: 0,
-    combo: 0,
-    bestCombo: 0,
-    isCharging: false,
-    chargePower: 0,
-    gameActive: false,
-    gameTime: 0
-  });
-
-  // Simulate loading progress
-  useEffect(() => {
-    const loadingInterval = setInterval(() => {
-      setLoadingProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(loadingInterval);
-          setTimeout(() => {
-            setIsLoading(false);
-            setCurrentScreen('menu');
-          }, 500); // Small delay for smooth transition
-          return 100;
-        }
-        return prev + Math.random() * 15 + 5; // Random progress increments
-      });
-    }, 200);
-
-    return () => clearInterval(loadingInterval);
-  }, []);
+  const { 
+    gameState, 
+    isLoading, 
+    loadingProgress, 
+    startGame, 
+    restartGame,
+    returnToMenu,
+    getChargePower,
+    updateChargePower
+  } = useGameState();
 
   if (isLoading) {
     return (
@@ -65,52 +44,86 @@ function App() {
     );
   }
 
-  // Menu handlers
-  const handleStartGame = () => {
-    setCurrentScreen('game');
-    setGameState(prev => ({ ...prev, gameActive: true }));
-  };
-
-  const handleReturnToMenu = () => {
-    setCurrentScreen('menu');
-    setGameState(prev => ({ ...prev, gameActive: false }));
-  };
-
-  if (currentScreen === 'menu') {
+  if (gameState.currentScreen === 'menu') {
     return (
       <div className="App">
-        {/* Game battlefield commented out for now */}
-        {/* <Canvas
+        <HomeScene onStartGame={startGame} />
+      </div>
+    );
+  }
+
+  if (gameState.currentScreen === 'battlefield') {
+    return (
+      <div className="App">
+        <Canvas
+          key={gameState.restartCount} // Force remount on restart
           shadows
-          camera={{ position: [0, 5, 10], fov: 75 }}
+          camera={{ position: [0, 4, 12], fov: 75 }}
           style={{ background: 'linear-gradient(to bottom, #0a0a0a, #1a1a2e, #16213e)' }}
         >
-          <Game 
-            gameState={{ ...gameState, gameActive: false }} 
-            setGameState={setGameState} 
+          <Battlefield onReturnToMenu={returnToMenu} updateChargePower={updateChargePower} />
+        </Canvas>
+        
+        {/* Battlefield UI - Left Side */}
+        <div className="battlefieldUI">
+          <button 
+            className="returnButton"
+            onMouseDown={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onMouseUp={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              returnToMenu();
+            }}
+          >
+            ← Return to Menu
+          </button>
+        </div>
+
+        {/* Battlefield UI - Right Side */}
+        <div className="battlefieldUIRight">
+          <button 
+            className="restartButton"
+            onMouseDown={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onMouseUp={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              restartGame();
+            }}
+          >
+            🔄 Restart Game
+          </button>
+        </div>
+
+        {/* Power Bar */}
+        <div className="powerBar">
+          <div 
+            className="powerFill" 
+            style={{ height: `${(getChargePower() / 100) * 100}%` }}
           />
-        </Canvas> */}
-        <Menu 
-          onStartGame={handleStartGame}
-        />
+        </div>
+
+
       </div>
     );
   }
 
   return (
     <div className="App">
-      {/* Game battlefield commented out for now */}
-      {/* <Canvas
-        shadows
-        camera={{ position: [0, 5, 10], fov: 75 }}
-        style={{ background: 'linear-gradient(to bottom, #0a0a0a, #1a1a2e, #16213e)' }}
-      >
-        <Game 
-          gameState={gameState} 
-          setGameState={setGameState} 
-        />
-      </Canvas>
-      <UI gameState={gameState} setGameState={setGameState} onReturnToMenu={handleReturnToMenu} /> */}
+      <HomeScene onStartGame={startGame} />
     </div>
   );
 }

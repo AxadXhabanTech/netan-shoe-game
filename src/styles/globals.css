@@ -1,0 +1,291 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom, #0a0a0a, #1a1a2e, #16213e);
+  color: white;
+  overflow: hidden;
+}
+
+.App {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* Ensure UI is above Canvas */
+.battlefieldUI,
+.battlefieldUIRight,
+.powerBar {
+  position: absolute;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* Loading Screen */
+.loadingScreen {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #0a0a0a, #1a1a2e, #16213e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.loadingContent {
+  text-align: center;
+  z-index: 1000;
+}
+
+.loadingContent h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #4ECDC4, #44A08D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(78, 205, 196, 0.5);
+}
+
+.loadingContent p {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #87CEEB;
+}
+
+.loadingBar {
+  width: 400px;
+  height: 8px;
+  background: rgba(15, 52, 96, 0.8);
+  border-radius: 4px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  border: 1px solid #4ECDC4;
+  box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+}
+
+.loadingProgress {
+  height: 100%;
+  background: linear-gradient(to right, #4ECDC4, #44A08D);
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+.loadingText {
+  font-size: 18px;
+  color: #87CEEB;
+  margin-bottom: 10px;
+  min-height: 27px;
+}
+
+.loadingPercentage {
+  font-size: 36px;
+  font-weight: bold;
+  color: #4ECDC4;
+  text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+}
+
+/* Main Menu */
+.mainMenu {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #0a0a0a, #1a1a2e, #16213e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.menuContent {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(15, 52, 96, 0.9));
+  padding: 60px;
+  border-radius: 20px;
+  text-align: center;
+  border: 2px solid #4ECDC4;
+  box-shadow: 0 0 40px rgba(78, 205, 196, 0.3);
+  backdrop-filter: blur(10px);
+  min-width: 400px;
+}
+
+.menuContent h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #4ECDC4, #44A08D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(78, 205, 196, 0.5);
+}
+
+.menuContent p {
+  font-size: 20px;
+  color: #87CEEB;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.menuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.menuBtn {
+  padding: 18px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.menuBtn.primary {
+  background: linear-gradient(45deg, #4ECDC4, #44A08D);
+  color: white;
+  box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+}
+
+.menuBtn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5);
+  background: linear-gradient(45deg, #44A08D, #4ECDC4);
+}
+
+.menuBtn.secondary {
+  background: linear-gradient(45deg, rgba(78, 205, 196, 0.2), rgba(69, 183, 209, 0.2));
+  color: #4ECDC4;
+  border: 2px solid #4ECDC4;
+}
+
+.menuBtn.secondary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(45deg, rgba(78, 205, 196, 0.3), rgba(69, 183, 209, 0.3));
+  box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+}
+
+.menuFooter {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(78, 205, 196, 0.3);
+}
+
+.menuFooter p {
+  font-size: 14px;
+  color: #87CEEB;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Battlefield UI */
+.battlefieldUI {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.battlefieldUIRight {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.returnButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
+  user-select: none;
+  position: relative;
+  z-index: 10000;
+}
+
+.returnButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.restartButton {
+  background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
+  user-select: none;
+  position: relative;
+  z-index: 10000;
+}
+
+.restartButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #44A08D 0%, #4ECDC4 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menuContent {
+    padding: 40px;
+    min-width: 300px;
+  }
+  
+  .menuContent h1 {
+    font-size: 36px;
+  }
+  
+  .menuContent p {
+    font-size: 18px;
+  }
+  
+  .menuBtn {
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+  
+  .loadingContent h1 {
+    font-size: 36px;
+  }
+  
+  .loadingContent p {
+    font-size: 20px;
+  }
+  
+  .loadingBar {
+    width: 300px;
+  }
+  
+  .loadingText {
+    font-size: 16px;
+  }
+  
+  .loadingPercentage {
+    font-size: 28px;
+  }
+}
